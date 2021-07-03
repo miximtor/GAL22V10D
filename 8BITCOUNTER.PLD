@@ -1,0 +1,48 @@
+Name     8BITCOUNTER ;
+PartNo   00 ;
+Date     2021/7/3 ;
+Revision 01 ;
+Designer maxtorm ;
+Company  maxtorm ;
+Assembly None ;
+Location  ;
+Device   g22v10 ;
+
+/* *************** INPUT PINS *********************/
+PIN 1 = CP;
+PIN 2 = !MR;
+PIN [3..10] = [D0..D7];
+PIN 11 = NC0;
+PIN 12 = NC1;
+/* *************** OUTPUT PINS *********************/
+PIN 13 = !LD;
+PIN 14 = CO;
+PIN [22..15] = [Q0..Q7];
+PIN 23 = EN;
+
+CO = [Q0..Q7]:& & !MR;
+Q0.ar = MR;
+Q0.sp = D0 & !D0;
+
+ld = !MR & LD;
+hd = !MR & !LD & !EN;
+cu = !MR & !LD & EN;
+
+tog0 = !Q0;
+tog1 = Q1 $ Q0;
+tog2 = Q2 $ ([Q1..Q0]:&);
+tog3 = Q3 $ ([Q2..Q0]:&);
+tog4 = Q4 $ ([Q3..Q0]:&);
+tog5 = Q5 $ ([Q4..Q0]:&);
+tog6 = Q6 $ ([Q5..Q0]:&);
+tog7 = Q7 $ ([Q6..Q0]:&);
+
+Q0.D = Q0 & hd # tog0 & cu # D0 & ld;
+Q1.D = Q1 & hd # tog1 & cu # D1 & ld;
+Q2.D = Q2 & hd # tog2 & cu # D2 & ld;
+Q3.D = Q3 & hd # tog3 & cu # D3 & ld;
+Q4.D = Q4 & hd # tog4 & cu # D4 & ld;
+Q5.D = Q5 & hd # tog5 & cu # D5 & ld;
+Q6.D = Q6 & hd # tog6 & cu # D6 & ld;
+Q7.D = Q7 & hd # tog7 & cu # D7 & ld;
+
